@@ -3,28 +3,19 @@
 
 
 def minOperations(n):
-    """Performs minOperations on n and
-    returns the total number of performed operations to achieve n"""
+    """Calculates the fewest number of operations needed
+    to result in exactly n H characters in the file."""
     if n <= 1:
         return 0
 
-    clipBoard = ""
-    currentString = "H"
-    numOfOperation = 0
+    num_operations = 0
+    divisor = 2
 
-    while len(currentString) < n:
-        if len(currentString) == n:
-            break
+    while n > 1:
+        if n % divisor == 0:
+            n //= divisor
+            num_operations += divisor
+        else:
+            divisor += 1
 
-        if clipBoard == "":
-            clipBoard = currentString
-            numOfOperation += 1
-
-        if n % len(currentString) == 0 and len(currentString) != 1:
-            clipBoard = currentString
-            numOfOperation += 1
-
-        currentString += clipBoard
-        numOfOperation += 1
-
-    return numOfOperation
+    return num_operations
