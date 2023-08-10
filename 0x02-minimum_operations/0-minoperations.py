@@ -5,6 +5,9 @@
 def minOperations(n):
     """Performs minOperations on n and
     returns the total number of performed operations to achieve n"""
+    if n <= 1:
+        return 0
+
     clipBoard = ""
     currentString = "H"
     numOfOperation = 0
