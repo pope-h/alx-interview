@@ -1,20 +1,17 @@
 #!/usr/bin/node
 
-const request = require('request-promise')
+const request = require('request-promise');
 
-
-async function getCharacterName(characterUrl) {
+async function getCharacterName (characterUrl) {
   try {
     const character = await request(characterUrl);
     return JSON.parse(character).name;
   } catch (error) {
-    throw new Error(`Error retrieving character: ${error}`)
+    throw new Error(`Error retrieving character: ${error}`);
   }
-  
 }
 
-
-async function getCharacters(movieId) {
+async function getCharacters (movieId) {
   try {
     const film = await request(`https://swapi.dev/api/films/${movieId}/`);
     const characters = JSON.parse(film).characters;
@@ -24,10 +21,9 @@ async function getCharacters(movieId) {
       console.log(characterName);
     }
   } catch (error) {
-    throw new Error(`Error retrieving film: ${error}`)
+    throw new Error(`Error retrieving film: ${error}`);
   }
 }
 
-
 const movieId = process.argv[2];
-getCharacters(movieId)
+getCharacters(movieId);
