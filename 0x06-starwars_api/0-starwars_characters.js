@@ -2,6 +2,7 @@
 
 const request = require('request-promise')
 
+
 async function getCharacterName(characterUrl) {
   try {
     const character = await request(characterUrl);
@@ -11,6 +12,7 @@ async function getCharacterName(characterUrl) {
   }
   
 }
+
 
 async function getCharacters(movieId) {
   try {
@@ -25,6 +27,7 @@ async function getCharacters(movieId) {
     throw new Error(`Error retrieving film: ${error}`)
   }
 }
+
 
 const movieId = process.argv[2];
 getCharacters(movieId)
