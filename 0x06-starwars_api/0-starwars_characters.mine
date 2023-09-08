@@ -1,8 +1,6 @@
 #!/usr/bin/node
 
-const util = require('util');
-const request = util.promisify(require('request'));
-const movieId = process.argv[2];
+const promise = require('request-promise');
 
 async function getCharacterName (characterUrl) {
   try {
@@ -27,4 +25,5 @@ async function getCharacters (movieId) {
   }
 }
 
+const movieId = process.argv[2];
 getCharacters(movieId);
