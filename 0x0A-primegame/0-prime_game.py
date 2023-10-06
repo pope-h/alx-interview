@@ -1,57 +1,28 @@
 #!/usr/bin/python3
-""" Prime Game Module """
+"""Prime game module.
+"""
 
 
-def isPrime(n: int) -> bool:
+def isWinner(x, nums):
+    """Determines the winner of a prime game session with `x` rounds.
     """
-    checks if n is a prime number
-    """
-    if n < 2:
-        return False
-
-    for i in range(2, int(n**0.5) + 1):
-        if n % i == 0:
-            return False
-    return True
-
-
-def playRound(n: int) -> str:
-    """
-    checks how whose turn it is to play
-    Maria plays for every odd turns
-    Ben plays for every even turns
-    """
-    turns = 0
-    for i in range(1, n + 1):
-        if isPrime(i):
-            turns += 1
-
-    if turns % 2 == 0:
-        return 'Ben'
-    else:
-        return 'Maria'
-
-
-def isWinner(x: int, nums: list) -> str:
-    """
-    checks the winner by comparing who played most
-    """
-    maria_wins = 0
-    ben_wins = 0
-
-    for n in nums:
-        if x:
-            winner = playRound(n)
-            if winner == 'Maria':
-                maria_wins += 1
-            else:
-                ben_wins += 1
-
-            x -= 1
-
-    if maria_wins > ben_wins:
-        return 'Maria'
-    elif ben_wins > maria_wins:
-        return 'Ben'
-    else:
+    if x < 1 or not nums:
         return None
+    marias_wins, bens_wins = 0, 0
+    # generate primes with a limit of the maximum number in nums
+    n = max(nums)
+    primes = [True for _ in range(1, n + 1, 1)]
+    primes[0] = False
+    for i, is_prime in enumerate(primes, 1):
+        if i == 1 or not is_prime:
+            continue
+        for j in range(i + i, n + 1, i):
+            primes[j - 1] = False
+    # filter the number of primes less than n in nums for each round
+    for _, n in zip(range(x), nums):
+        primes_count = len(list(filter(lambda x: x, primes[0: n])))
+        bens_wins += primes_count % 2 == 0
+        marias_wins += primes_count % 2 == 1
+    if marias_wins == bens_wins:
+        return None
+    return 'Maria' if marias_wins > bens_wins else 'Ben'
