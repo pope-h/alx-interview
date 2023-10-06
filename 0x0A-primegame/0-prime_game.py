@@ -1,57 +1,36 @@
 #!/usr/bin/python3
-""" Prime Game Module """
+"""0. The Prime Game"""
 
 
-def isPrime(n):
-    """
-    checks if n is a prime number
-    """
-    if n < 2:
-        return False
+def isWinner(x: int, nums: list) -> str:
+    """determine who the winner of each game is between Ben and Maria"""
+    #  print('x:', x, 'nums:', nums)
+    ben = 0
+    maria = 0
 
-    for i in range(2, int(n**0.5) + 1):
-        if n % i == 0:
-            return False
-    return True
+    for round in range(x):
+        arr = list(range(1, nums[round] + 1))
+        #  print('Round', round + 1, ':', arr)
 
+        index = 0
+        while len(arr) > 1:
+            index += 1
+            #  print('Maria\'s' if index % 2 == 1 else 'Ben\'s', 'move:', arr)
+            prime = arr[1]
+            for num in arr[:]:
+                if num % prime == 0:
+                    arr.pop(arr.index(num))
+        if index % 2 == 1:
+            maria += 1
+            #  print('Maria won!', '>>>', 'Ben:', ben, 'Maria:', maria)
+        else:
+            ben += 1
+            #  print('Ben won!', '>>>', 'Ben:', ben, 'Maria:', maria)
 
-def playRound(n):
-    """
-    checks how whose turn it is to play
-    Maria plays for every odd turns
-    Ben plays for every even turns
-    """
-    turns = 0
-    for i in range(1, n + 1):
-        if isPrime(i):
-            turns += 1
-
-    if turns % 2 == 0:
+    #  print('Ben:', ben, 'Maria:', maria)
+    # return results
+    if ben > maria:
         return 'Ben'
-    else:
+    elif maria > ben:
         return 'Maria'
-
-
-def isWinner(x, nums):
-    """
-    checks the winner by comparing who played most
-    """
-    maria_wins = 0
-    ben_wins = 0
-
-    for n in nums:
-        if x:
-            winner = playRound(n)
-            if winner == 'Maria':
-                maria_wins += 1
-            else:
-                ben_wins += 1
-
-            x -= 1
-
-    if maria_wins > ben_wins:
-        return 'Maria'
-    elif ben_wins > maria_wins:
-        return 'Ben'
-    else:
-        return None
+    return None
