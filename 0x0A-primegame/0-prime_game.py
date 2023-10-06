@@ -28,7 +28,8 @@ def playRound(n):
 
     if turns % 2 == 0:
         return 'Ben'
-    return 'Maria'
+    else:
+        return 'Maria'
 
 
 def isWinner(x, nums):
@@ -43,11 +44,10 @@ def isWinner(x, nums):
             winner = playRound(n)
             if winner == 'Maria':
                 maria_wins += 1
-            if winner == 'Ben':
+            else:
                 ben_wins += 1
 
             x -= 1
-
 
     if maria_wins > ben_wins:
         return 'Maria'
